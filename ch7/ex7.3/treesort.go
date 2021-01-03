@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"bytes"
+)
+
 type tree struct {
 	value       int
 	left, right *tree
@@ -39,4 +44,26 @@ func add(t *tree, v int) *tree {
 	}
 
 	return t
+}
+
+func (t *tree) String() string {
+	values := make([]int, 0)
+	values = appendValues(values, t)
+	var buf bytes.Buffer
+	buf.WriteByte('{')
+	for i, value := range values {
+		if i > 0 {
+			buf.WriteByte(' ')
+		}
+		fmt.Fprintf(&buf, "%d", value)
+	}
+	buf.WriteByte('}')
+	return buf.String()
+}
+
+func main() {
+	root := &tree{value: 3}
+	root = add(root, 2)
+	root = add(root, 4)
+	fmt.Println(root)
 }
