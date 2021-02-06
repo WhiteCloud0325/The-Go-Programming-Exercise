@@ -2,10 +2,12 @@ package main
 
 import "fmt"
 
+func myFunc() {
+	c := make(chan int, 1)
+	c <- 1 // 报错 deadlock, 下面的代码不会执行
+	fmt.Println(<-c)
+}
+
 func main() {
-	var slice1 []int
-	slice2 := make([]int, 0, 5)
-	slice1 = append(slice1, 1)
-	fmt.Println(len(slice1))
-	fmt.Println(len(slice2))
+	myFunc()
 }
